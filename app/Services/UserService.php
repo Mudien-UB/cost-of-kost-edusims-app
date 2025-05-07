@@ -7,11 +7,21 @@ use App\Models\User;
 
 class UserService
 {
+    /**
+     * Mendapatkan data user berdasarkan id.
+     *
+     * @param string $id ID pengguna yang akan dicari.
+     * @return UserResource Data pengguna dalam format resource.
+     */
     public function getUserById(string $id): UserResource
     {
         return new UserResource(User::findOrFail($id));
     }
 
+    /**
+     * Mendapatkan daftar pengguna yang dipaginasi, dengan filter opsional berdasarkan username.
+     *
+     */
     public function getPaginatedUsers(?string $username = null, int $page = 1, int $perPage = 10)
     {
         $query = User::query();
@@ -26,10 +36,13 @@ class UserService
         if($users->isEmpty()) {
             abort(404, 'No users found');
         }
-
         return UserResource::collection($users);
     }
 
+    /**
+     * Memperbarui username pengguna yang sedang login.
+     *
+     */
     public function updateUsername(string $username): UserResource
     {
         $user = auth()->user();
@@ -44,6 +57,10 @@ class UserService
         return new UserResource($user);
     }
 
+    /**
+     * Memperbarui data pengguna berdasarkan id.
+     *
+     */
     public function updateUser(int $id, array $data): UserResource
     {
         $user = User::findOrFail($id);
@@ -67,8 +84,13 @@ class UserService
         return new UserResource($user);
     }
 
+    /**
+     * Menghapus pengguna berdasarkan id.
+     *
+     */
     public function deleteUser(int $id): bool
     {
+        // Mencari pengguna berdasarkan ID dan menghapusnya
         $user = User::findOrFail($id);
         return $user->delete();
     }
