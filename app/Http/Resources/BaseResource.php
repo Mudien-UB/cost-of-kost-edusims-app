@@ -28,6 +28,7 @@ class BaseResource extends JsonResource
             'status' => $this->statusCode,
             'message' => $this->message,
             'data' => $this->resource,
+            'timestamps'=> now()->format('Y-m-d H:i:s')
         ];
     }
 
@@ -40,6 +41,7 @@ class BaseResource extends JsonResource
             'status' => $status,
             'message' => $message,
             'data' => $data,
+            'timestamp' => now()->format('Y-m-d H:i:s')
         ], $status);
     }
 }

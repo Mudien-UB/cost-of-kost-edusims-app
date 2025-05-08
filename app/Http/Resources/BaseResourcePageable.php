@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class BaseResourcePageable extends ResourceCollection
 {
@@ -25,7 +26,7 @@ class BaseResourcePageable extends ResourceCollection
         return [
             'status' => $this->statusCode,
             'message' => $this->message,
-            'data' => $this->collection,    
+            'data' => $this->collection,
             'meta' => [
                 'current_page' => $this->currentPage(),
                 'from' => $this->firstItem(),
@@ -34,6 +35,7 @@ class BaseResourcePageable extends ResourceCollection
                 'to' => $this->lastItem(),
                 'total' => $this->total(),
             ],
+            'timestamps' => date('Y-m-d H:i:s'),
         ];
     }
 
@@ -62,6 +64,7 @@ class BaseResourcePageable extends ResourceCollection
                 'to' => $resource->lastItem(),
                 'total' => $resource->total(),
             ],
+            'timestamps' => date('Y-m-d H:i:s'),
         ], $status);
     }
 }

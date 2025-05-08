@@ -16,6 +16,9 @@ class User extends Authenticatable implements JWTSubject
 
     protected $table = "users";
 
+    public $incrementing = false;
+    protected $keyType = 'string';
+
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +59,14 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function expenses(){
+        return $this->hasMany(Expense::class);
+    }
+
+    public function incomes(){
+        return $this->hasMany(Income::class);
     }
 
 }
